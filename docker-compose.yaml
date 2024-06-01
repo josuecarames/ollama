@@ -16,20 +16,16 @@ services:
     # environment:
     #   - NVIDIA_VISIBLE_DEVICES=all
     #   - NVIDIA_DRIVER_CAPABILITIES=compute,utility
-    restart: unless-stopped
 
-  open-webui:
+  webui:
     image: ghcr.io/open-webui/open-webui:latest
-    container_name: open-webui
+    container_name: webui
     ports:
       - "3000:8080"
     environment:
-      - WEBUI_AUTH=False
-      - OLLAMA_BASE_URL=localhost:11434
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
+      - OLLAMA_BASE_URL=http://ollama:11434
     volumes:
-      - open-webui:/app/backend/data
+      - webui:/app/backend/data
     restart: unless-stopped
 
   node_exporter:
@@ -62,4 +58,4 @@ services:
 
 volumes:
   ollama:
-  open-webui:
+  webui:
